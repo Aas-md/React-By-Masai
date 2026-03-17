@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/axios@1.13.2/dist/axios.min.js"></script>
+
 </head>
 
 <body>
@@ -17,35 +20,31 @@
     <script type="text/babel">
 
         let root = ReactDOM.createRoot(document.getElementById('root'))
-        let { useState } = React
-
-        function Counter() {
-
-            let [count, setCount] = useState(0)
-
-            function incrementCount() {
-                setCount(count += 1)
-                
-            }
-
-            return (
-                <>
-                    <h1>Counter : {count}</h1>
-                    <button onClick={incrementCount}>Increment</button>
-                </>
-            )
-        }
+        let { useState } = React;
 
         function App() {
 
+            let [data, setData] = useState([])
+
+            let url = "https://jsonplaceholder.typicode.com/posts"
+
+            let fetchPost = async ()=>{
+
+                let res = await axios.get(url)
+                console.log(res.data)
+            }
+
+
             return (
                 <>
-                    <Counter/>
+                    <h1>Hello from react APi calling</h1>
+                    <button onClick={fetchPost}>FetchPost</button>
+               
                 </>
             )
         }
 
-        root.render(<App name="Aas MOhammad" />)
+        root.render(<App />)
 
     </script>
 

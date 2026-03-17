@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <div id="root">Hello from DOM</div>
+
+    <script type="text/babel">
+
+        let root = ReactDOM.createRoot(document.getElementById('root'))
+        let { useState } = React;
+
+
+        function FormCompo() {
+
+            let [formData, setFormData] = useState({name : "",age : "", gender : "", about : ""})
+
+            let handleSubmit = (e)=>{
+                    e.preventDefault()
+                    console.log(formData)
+                    setFormData({name : "",age : "", gender : "", about : ""})
+                    
+            }
+
+            let handleOnChange = (e)=>{
+              
+                let {name,value} = e.target
+                setFormData({...formData,[name] : value})
+              
+            }
+
+            return (
+                <form onSubmit={handleSubmit}>
+
+                    <label >
+                        Name : <input type="text" name="name" value={formData.name} onChange={handleOnChange} />
+                    </label>
+                    <br/>
+                    <label >
+                        Age : <input type="Number" name="age" value={formData.age} onChange={handleOnChange} />
+                    </label>
+                      <br/>
+                    <label >
+                        Gender : <select name="gender" value={formData.gender} onChange={handleOnChange}>
+                            
+                                <option value="Male" >Male</option>
+                                <option value="Female" >Female</option>
+                                <option value="Custom" >Custom</option>
+                            </select>
+                    </label>
+                      <br/>
+                    <label >
+                        About : <input type="text" name="about" value={formData.about} onChange={handleOnChange} />
+                    </label>
+                      <br/>
+
+                    <button type="submit">Submit</button>
+
+                </form>
+            )
+        }
+
+        function App() {
+            return (
+                <>
+                    <FormCompo />
+
+                </>
+            )
+        }
+        root.render(<App />)
+
+    </script>
+
+</body>
+
+</html>
