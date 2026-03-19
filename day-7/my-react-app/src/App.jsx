@@ -1,41 +1,28 @@
 import { useState } from 'react'
 import './App.css'
 import { useContext } from 'react'
+import ShowData from './component/ShowData'
+import { DataProvider } from './DataContext/DataProvider'
 
 
-let NameContext = React.createContext()
+
 
 function App() {
-  let [name, setName] = useState("Duplesis")
+
 
   return (
-   
-    <NameContext.Provider value={name}>
-      <Parent />
-    </NameContext.Provider>
+    <>
+
+      <h1>Hello world</h1>
+
+    <DataProvider>
+      <ShowData/>
+    </DataProvider>
+
+    </>
 
   )
 }
 
-function Parent(){
-  return (
-    <><Child /></>
-  )
-}
-
-function Child(){
-
-  return (
-    <><GrandChild /></>
-  )
-}
-
-function GrandChild(){
-
-  let name = useContext(NameContext)
-  return (
-    <><h1>Name is : {name}</h1></>
-  )
-}
 
 export default App
