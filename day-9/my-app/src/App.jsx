@@ -1,67 +1,84 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <CounterCompo/>
+      <Pagination />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
 
-function FocusCompo(){
+function CounterCompo() {
+  let [count, setCount] = useState(0);
+  let renderCount = useRef(1);
+  let prev = useRef(0);
 
-  let inputRef = useRef(null)
-
-  let handleFocusInput = ()=>{
-    console.log(inputRef.current)
-    inputRef.current.focus()
-    inputRef.current.style.backgroundColor = "white"
-    inputRef.current.style.color = "black"
-    inputRef.current.style.margin = "0 auto"
-  
-
-
-  }
+  useEffect(() => {
+    renderCount.current += 1;
+    prev.current = count;
+  });
 
   return (
     <>
-
-      <input ref={inputRef} type="text" placeholder='Enter your name' />
-      <button onClick={handleFocusInput}>Submit</button>
-
+      <h1>Count : {count}</h1>
+      <button
+        onClick={() => {
+          setCount((prev) => prev + 1);
+        }}
+      >
+        Increment
+      </button>
+      <h3>Renreder : {renderCount.current} times</h3>
+      <h3>Prev valueis : {prev.current} times</h3>
     </>
-  )
+  );
 }
 
-function CounterCompo(){
+function Pagination() {
+  let [page, setPage] = useState(1);
+  let [posts, setPosts] = useState([]);
+  let postPerPage = 10;
 
-  let [count, setCount] = useState(0)
-  let renderCount = useRef(1)
-  let [prev,setPrev] = useState(5)
+  let FetchPost = async () => {
+    // Implementation for fetching posts
 
-  useEffect(()=>{
-    renderCount.current += 1
-    
+    let url = `https://jsonplaceholder.typicode.com/posts`;
+    let response = await fetch(url);
+    let res = await response.json();
 
-  })
+    setPosts(res);
+  };
+
+  useEffect(() => {
+    FetchPost();
+  }, []);
+
+
+  let end = page * postPerPage;
+  let start = end - postPerPage;
+  let currentPosts = posts.slice(start, end);
+
+
 
   return (
-
     <>
+      <h1>Page : {page}</h1>
+      {currentPosts.map((post) => (
+        <div key={post.id} style={{ border: "solid 1px black" }}>
+          <h2>{post.id}</h2>
+          <p>{post.title}</p>
+        </div>
+      ))}
 
-    <h1>Count : {count}</h1>
-    <button onClick={()=>{setCount(prev => prev+1)}}>Increment</button>
-    <h3>Renreder : {renderCount.current} times</h3>
-    <h3>Prev valueis  : {prev} times</h3>
-
-
+      <button onClick={() => setPage(page => page - 1)} disabled={page === 1}>Previous Page</button>
+       <button onClick={() => setPage(page => page + 1)}>Next Page</button>
 
     </>
-  )
+  );
 }
