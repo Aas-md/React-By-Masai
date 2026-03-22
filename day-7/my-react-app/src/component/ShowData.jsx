@@ -16,6 +16,7 @@ export default function ShowData() {
                 return (
                     <div key={item.id}>
                         <h1>{item.title}</h1>
+                   
                     </div>
                 )
             })}
