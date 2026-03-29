@@ -2,24 +2,33 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   let [data, setData] = useState([]);
-  
-  let url = "https://rickandmortyapi.com/api/character";
+  let [pageData, setPageData] = useState([]);
+  let currPage = useRef(1);
 
-    let currPage = useRef(1)
 
   let fetchData = async () => {
+    let url = `https://rickandmortyapi.com/api/character?page=${currPage.current}`;
     let response = await fetch(url);
     let res = await response.json();
     setData(res.results);
+
   };
 
   useEffect(() => {
+    console.log("useEffect called");
     fetchData();
-  }, []);
+  }, [pageData]);
 
-  let handlePrev = ()=>{
-    currPage.current -=1
-    console.log(currPage.current)
+  let handlePrev = () => {
+    currPage.current -= 1;
+    let currData = data.slice(0, 10);
+    setPageData(currData);
+  };
+
+  let handleNext = ()=>{
+    currPage.current +=1
+   let currData = data.slice(0,10)
+    setPageData(currData)
   }
 
   return (
@@ -27,7 +36,7 @@ export default function Home() {
       <h1>Hello world home page </h1>
 
       <div>
-        {data.map((item) => (
+        {pageData.map((item) => (
           <div key={item.id}>
             <h1>ID : {item.id}</h1>
             <h2>Name : {item.name}</h2>
@@ -37,10 +46,10 @@ export default function Home() {
           </div>
         ))}
       </div>
-      {/* {console.log(currPage.current)}    */}
 
-        <button onClick={handlePrev}>Prev</button>
-        
+      <button onClick={handlePrev}>Prev</button>
+      <button onClick={handleNext}>Next</button>
+
     </>
   );
 }
