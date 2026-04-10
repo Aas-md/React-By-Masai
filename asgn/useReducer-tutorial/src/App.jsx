@@ -1,36 +1,36 @@
-import { useReducer, useState } from 'react'
-import './App.css'
+import { createContext, useReducer } from "react";
+import "./App.css";
+import { DispatchContext, initialState, reducer, StateContext } from "./data";
+import Home from "./Home";
 
-let reducer = (state,action)=>{
 
-  switch(action.type){
-    case "increment" : 
-    return {count : state.count + 1}
-    case "decrement" :
-    return {count : state.count - 1}
-    case "reset" :
-    return {count : 0}
-    default :
-    return state
-
-  }
-}
 
 function App() {
-
-  
-  
-  let initialState = {count : 0}
-  let [state, dispatch] = useReducer(reducer,initialState)
+  let [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <>
-      <h1>Count : {state.count}</h1>
-      <button onClick={()=> dispatch({type : "increment"})}>Increment</button>
-      <button onClick={()=> dispatch({type : "decrement"})}>Decrement</button>
-      <button onClick={()=> dispatch({type : 'reset'})}>Reset</button>
-    </>
-  )
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        <div
+          style={{
+            backgroundColor: state.theme === "dark" ? "grey" : "white",
+            color: state.theme === "dark" ? "white" : "black",
+            height: "100vh",
+          }}
+        >
+          <h1>Current theme is {state.theme}</h1>
+          <button
+            onClick={() =>
+              dispatch({ type: state.theme == "dark" ? "light" : "dark" })
+            }
+          >
+            Toggle Theme
+          </button>
+          <Home />
+        </div>
+      </DispatchContext.Provider>
+    </StateContext.Provider>
+  );
 }
 
-export default App
+export default App;
