@@ -5,19 +5,25 @@ function TodoList() {
   const [input, setInput] = useState("");
 
   const addTask = () => {
+    if(input.length === 0){
+      alert("Please enter a task");
+      return;
+    }
     setTasks([...tasks, { text: input, completed: false }]);
     
     setInput("");
   };
 
   const toggleComplete = (index) => {
+   
     const newTasks = [...tasks];
     newTasks[index].completed = !newTasks[index].completed;
     setTasks(newTasks);
   };
 
   const deleteTask = (index) => {
-    const newTasks = tasks.filter((task, i) => i !== index - 1);
+   
+    const newTasks = tasks.filter((task, i) => i !== index);
     setTasks(newTasks);
   };
 
@@ -28,7 +34,7 @@ function TodoList() {
       <ul>
         {tasks.map((task, i) => (
           <li key={i}>
-            <span onClick={() => toggleComplete(i)} style={{marginRight : "10px"}}>{task.text}</span>
+            <span onClick={() => toggleComplete(i)} style={{marginRight : "10px", cursor:"pointer" , textDecoration: task.completed ? "line-through" : "none"}}>{task.text}</span>
             
             <button onClick={() => deleteTask(i)}>Delete</button>
           </li>
