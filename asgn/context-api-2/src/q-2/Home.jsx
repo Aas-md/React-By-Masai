@@ -1,15 +1,14 @@
-import { ChakraProvider, Box, Flex, Grid, Button } from "@chakra-ui/react";
+import { ChakraProvider, Box, Flex, Grid, Button, defaultSystem } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
 import { ThemeContext } from "./ThemeContext";
 
 function Home() {
-    const { isLoggedIn, toggleAuth } = useContext(AuthContext);
-    const { theme, toggleTheme } = useContext(ThemeContext);
-
+  const { isLoggedIn, toggleAuth } = useContext(AuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <ChakraProvider>
+    <ChakraProvider value={defaultSystem}>
       <Flex as="nav" p="4" bg={theme === "light" ? "gray.100" : "gray.700"} justifyContent="space-between">
         <Button onClick={toggleAuth}>{isLoggedIn ? "Log Out" : "Log In"}</Button>
         <Button onClick={toggleTheme}>Toggle to {theme === "light" ? "Dark" : "Light"} Theme</Button>
@@ -21,7 +20,7 @@ function Home() {
           </Box>
         ))}
       </Grid>
-      <Box as="footer" p="4" bg="gray.300">
+      <Box as="footer" p="4" bg={theme === "light" ? "gray.100" : "gray.700"}>
         Footer Content
       </Box>
     </ChakraProvider>
