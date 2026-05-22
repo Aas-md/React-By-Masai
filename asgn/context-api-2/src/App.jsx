@@ -6,15 +6,12 @@ import "./App.css";
 import Home from "./q-2/Home";
 import { AuthContextProvider } from "./q-2/AuthContext";
 import { ThemeContextProvider } from "./q-2/ThemeContext";
+import Navbar from "./q3/Navbar";
 
 function App() {
   return (
     <>
-      <AuthContextProvider>
-        <ThemeContextProvider>
-          <Home />
-        </ThemeContextProvider>
-      </AuthContextProvider>
+      <Navbar />
     </>
   );
 }
