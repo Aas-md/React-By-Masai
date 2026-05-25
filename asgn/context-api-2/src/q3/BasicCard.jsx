@@ -11,9 +11,9 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard() {
+export default function BasicCard({className = "", style = {}}) {
   return (
-    <Card sx={{ width: 275 }}>
+    <Card sx={{ width: 275 }} style={style}>
       <CardContent>
         <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
           Word of the Day

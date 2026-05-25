@@ -9,12 +9,14 @@ import { ThemeContextProvider } from "./q-2/ThemeContext";
 import Navbar from "./q3/Navbar";
 import Sidebar from "./q3/Sidebar";
 import MainContent from "./q3/MainContent";
+import Footer from "./q3/Footer";
 
 function App() {
   return (
     <>
       <Navbar />
      <MainContent/>
+     <Footer/>
     </>
   );
 }
