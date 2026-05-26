@@ -7,14 +7,18 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./Sidebar";
 
+import { themeContext } from "./ThemeContext";
+import { useContext } from "react";
+
 export default function Navbar() {
+  let {theme, setTheme} = useContext(themeContext);
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="fixed" sx={{ backgroundColor: theme == "dark" && "grey" }}>
           <Toolbar>
-          
-             <Sidebar/>
+            <Sidebar />
             <Typography variant="h6" component="div" sx={{ mr: 1 }}>
               News
             </Typography>
