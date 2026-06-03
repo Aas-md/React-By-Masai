@@ -7,7 +7,7 @@ export default function CounterApp() {
   console.log("Hello ");
   return (
     <>
-      <h1>Hello counter App kal </h1>
+      <h1>Hello counter App kal</h1>
     </>
   );
 }
